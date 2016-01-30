@@ -1,5 +1,5 @@
 //Lets define a port we want to listen to
-const PORT=80; 
+const PORT = process.argv[2] || 80;
 
 var http = require('http'),
     express = require('express'),
