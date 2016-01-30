@@ -33,7 +33,7 @@ Fields are not guaranteed to be present.
     { "report_id" : "56acf8c7876ce4471df44f39" }
 
 ##Incidents
-+ GET http://188.166.154.26/incidents?status=active&region=region_name_goes_here
++ GET http://188.166.154.26/incidents?status=active&location.region=region_name_goes_here
 + `location : `
 ++ `lat : float`
 ++ `lon : float`
