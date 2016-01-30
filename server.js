@@ -37,6 +37,7 @@ app.get('/', function (req, res) {
 
 app.get('/:collection', function(req, res) { 
     var params = req.params;
+    var collection = req.params.collection;
     var query = {};
     var key;
     for (key in req.query)
@@ -44,13 +45,18 @@ app.get('/:collection', function(req, res) {
 	    query[key] = req.query[key];
     console.log(query);
 
-    dbDriver.findAll(req.params.collection, query, function(error, objs) { 
+    dbDriver.findAll(collection, query, function(error, objs) { 
     	if (error) { res.send(400, error); } 
-	else { 
+	else {
+	    for (var i = 0; i < objs.length; i++) {
+		objs[i][collection.slice(0, -1) + '_id'] = objs[i]._id;
+		delete objs[i]._id;
+	    }
+		console.log(objs);
 	    if (req.accepts('html')) { 
-    	        res.render('data',{objects: objs, collection: req.params.collection}); 
+    	        res.render('data',{objects: objs, collection: collection}); 
             } else {
-	        res.set('Content-Type','application/json'); 
+	        res.set('Content-Type','application/json');
                 res.send(200, objs); 
             }
         }
