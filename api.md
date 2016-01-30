@@ -4,9 +4,9 @@ Fields are not guaranteed to be present.
 
 ##Report
 + `location : `
-++ `lat : float`
-++ `lon : float`
-++ `region : string`
+  * `lat : float`
+  * `lon : float`
+  * `region : string`
 + `type : {"mass_shooting", "bombing", "natural_disaster", "other_major", "minor"}`
 + `subtype : {"flood", "fire", "earthquake", "robbery", "shooting"}`
 + `description : string`
