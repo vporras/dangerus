@@ -11,12 +11,12 @@ dbDriver.prototype.getCollection = function(collectionName, callback) {
   });
 };
 
-dbDriver.prototype.findAll = function(collectionName, callback) {
+dbDriver.prototype.findAll = function(collectionName, query, callback) {
     this.getCollection(collectionName, function(error, the_collection) { //A
       if(error)
 	  callback(error);
       else {
-        the_collection.find().toArray(function(error, results) { //B
+        the_collection.find(query).toArray(function(error, results) { //B
           if( error ) callback(error);
           else callback(null, results);
         });
@@ -45,7 +45,6 @@ dbDriver.prototype.create = function(collectionName, obj, callback) {
 	  callback(error)
       else {
           the_collection.insert(obj, function() {
-	      console.log(obj);
               callback(null, obj);
           });
       }
