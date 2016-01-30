@@ -45,17 +45,31 @@ Fields are not guaranteed to be present.
 + `incident_id : string`
 
 ###Example
-    {
-        "location" : {
-            "lat" : 47.0,
-            "lon" : -138.0,
-            "region" : "london"
+    [
+        {
+            "location" : {
+                "lat" : 47.0,
+                "lon" : -138.0,
+                "region" : "london"
+            },
+            "radius" : 2000,
+            "report_count" : 17,
+            "level" : "warning",
+            "message" : "The Thames mes may be flooding; stay clear of the river.",
+            "incident_id" : "56abcb32424bcff22342"
         },
-        "radius" : 2000,
-        "report_count" : 17,
-        "level" : "warning",
-        "message" : "The Thames mes may be flooding; stay clear of the river.",
-        "incident_id" : "56abcb32424bcff22342"
-    }
+        {
+            "location" : {
+                "lat" : 22.0,
+                "lon" : 110.0,
+                "region" : "jerusalem"
+            },
+            "radius" : 100,
+            "report_count" : 4,
+            "level" : "warning",
+            "message" : "Rocket fire has been reported in neighborhood X.",
+            "incident_id" : "56abcb32424bcff28798"
+        }
+    ]
     
 
