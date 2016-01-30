@@ -3,6 +3,7 @@ API
 Fields are not guaranteed to be present.
 
 ##Report
++ POST http://188.166.154.26/reports
 + `location : `
   * `lat : float`
   * `lon : float`
@@ -31,7 +32,8 @@ Fields are not guaranteed to be present.
 ###Example
     { "report_id" : "56acf8c7876ce4471df44f39" }
 
-##Incident
+##Incidents
++ GET http://188.166.154.26/incidents?region=region_name_goes_here
 + `location : `
 ++ `lat : float`
 ++ `lon : float`
