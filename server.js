@@ -36,6 +36,44 @@ app.get('/', function (req, res) {
     res.send('<html><body><h1>Welcome to Safety Circle!</h1></body></html>');
 });
 
+app.get('/dashboard', function (req, res) {
+    dbDriver.findAll("incidents", {}, function(error, objs) { 
+    	if (error) { res.send(400, error); } 
+	else {
+	    if (req.accepts('html')) { 
+    	        res.render('dashboard',{incidents: objs}); 
+            } else {
+	        res.set('Content-Type','application/json');
+                res.send(200, objs); 
+            }
+        }
+    });
+});
+
+
+app.get('/dashboard/:entity', function (req, res) {
+    var params = req.params;
+    var entity = params.entity;
+    dbDriver.get("incidents", entity, function(error, incident) { 
+    	if (error) { res.send(400, error); } 
+	else {
+	    var query = {incident_id: incident._id};
+	    dbDriver.findAll("reports", query, function(error, reports) {
+		if (req.accepts('html')) {
+		    console.log(incident);
+    	            res.render('incident', {
+			incident: incident,
+			reports: reports
+		    }); 
+		} else {
+	            res.set('Content-Type','application/json');
+                    res.send(200, reports);
+		}
+            });
+        }
+    });
+});
+
 app.get('/:collection', function(req, res) { 
     var params = req.params;
     var collection = req.params.collection;
@@ -80,8 +118,7 @@ app.post('/:collection', function(req, res) {
     var object = req.body;
     var collection = req.params.collection;
 
-    var callback = function(object) {	
-	console.log(object);
+    var callback = function(object) {
 	dbDriver.create(collection, object, function(err,docs) {
             if (err) { res.send(400, err); } 
             else {
@@ -99,12 +136,12 @@ app.post('/:collection', function(req, res) {
 	    status: "active",
 	    "region": object.region
 	};
-	console.log(query);
 	dbDriver.findAll("incidents", query,  function(error, objs) { 
     	    if (error) { console.log(error); } 
 	    else if (objs.length === 0) {
 		var incident = {
 		    region: object.region,
+		    time: object.time,
 		    lat: object.lat,
 		    lon: object.lon,
 		    radius: DEFAULT_RADIUS,
