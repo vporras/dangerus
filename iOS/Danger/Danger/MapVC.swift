@@ -99,6 +99,7 @@ class MapVC: UIViewController {
     
     
     func getIncidents(city: String) {
+        print(city)
         self.incidentAlert = nil
         let headers = [
             "Content-Type": "application/json",
@@ -111,8 +112,8 @@ class MapVC: UIViewController {
                     let json = JSON(data: response.data!)
                     for (_,subJson):(String, JSON) in json {
                         print(subJson)
-                        let coord = CLLocationCoordinate2D(latitude: Double(subJson["lat"].string!)!, longitude: Double(subJson["lon"].string!)!)
-                        let radius = Int(subJson["radius"].string!)!
+                        let coord = CLLocationCoordinate2D(latitude: subJson["lat"].double!, longitude: subJson["lon"].double!)
+                        let radius = subJson["radius"].int!
                         let level = subJson["level"].string!
                         let lastUpdated = subJson["updated_at"].string!
                         let region = subJson["region"].string!
