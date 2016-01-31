@@ -14,12 +14,12 @@ html(lang='en')
     nav.navbar.navbar-inverse.navbar-fixed-top
       .container
         .navbar-header
-          span.navbar-brand Safe Spot Dashboard
+          span.navbar-brand Safety Spot Dashboard
     .container
       .row
         .col-lg-6
-            //.row
-            .panel.panel-default
+           .row
+            .panel.panel-default.col-lg-12
               .panel-heading
                 | Incidents
               .panel-body
@@ -42,6 +42,14 @@ html(lang='en')
                           td= incident.level
                           td= incident.type
                           td= incident.status
+           .row
+             #map.col-lg-12
+             #marker-list
+               for incident in incidents
+                .marker(id=incident._id)
+                  .lat= incident.lat
+                  .lon= incident.lon
+                  .region= incident.region
         #incident-container.col-lg-6
           .row
             | Select an incident.
@@ -51,6 +59,7 @@ html(lang='en')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     // Include all compiled plugins (below), or include individual files as needed
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+    script(src='https://maps.googleapis.com/maps/api/js')
     script(src='../js/gmaps.js')
 
     script(src='../js/dashboard.js')

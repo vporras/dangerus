@@ -6,3 +6,19 @@
     color: #051;
     font-weight: bold;
 }
+
+.panel-default.panel {
+    border: none;
+}
+
+#map {
+    height: 400px;
+    width: 95%;
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(100px);
+}
+
+#marker-list {
+    display: none;
+}

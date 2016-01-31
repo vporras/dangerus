@@ -39,10 +39,31 @@ function loadIncident(id) {
 	});
 }
 
+var map;
 $(document).ready(function() {
     $(".inc-row").click(function(e) {
 	$(".inc-row").removeClass("selected");
 	$(e.currentTarget).addClass("selected");
 	loadIncident(e.currentTarget.id);
+    });
+
+    
+    map = new GMaps({
+	div: '#map',
+	lat: 0,
+	lng: 0,
+	zoom: 2 
+    });
+
+    $("#marker-list").children().each(function(i) {
+	var id = this.id;
+	map.addMarker({
+            lat: $(this).children(".lat").first().text() * 1.0,
+            lng: $(this).children(".lon").first().text() * 1.0,
+            title: $(this).children(".region").first().text(),
+            click: function(e){
+		loadIncident(id);
+            }
+      });
     });
 });       
