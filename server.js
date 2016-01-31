@@ -1,12 +1,13 @@
 //Lets define a port we want to listen to
 const PORT = process.argv[2] || 80;
-const DEFAULT_RADIUS = 1000;
+const DEFAULT_RADIUS = 1000.0;
 
 var http = require('http'),
 express = require('express'),
 path = require('path'),
 MongoClient = require('mongodb').MongoClient,
-dbDriver = require('./dbDriver').dbDriver;;
+dbDriver = require('./dbDriver').dbDriver,
+favicon = require('serve-favicon');
 
 var app = express();
 app.set('port', PORT); 
@@ -30,7 +31,9 @@ MongoClient.connect(url, function(err, db) {
 
 app.use(express.bodyParser());
 
-app.use(express.static(path.join(__dirname, 'css')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
     res.send('<html><body><h1>Welcome to Safety Circle!</h1></body></html>');
