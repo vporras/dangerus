@@ -97,19 +97,21 @@ app.post('/:collection', function(req, res) {
     if (collection === "reports") {
 	var query = {
 	    status: "active",
-	    "location.region": object.location.region
+	    "region": object.region
 	};
 	console.log(query);
 	dbDriver.findAll("incidents", query,  function(error, objs) { 
     	    if (error) { console.log(error); } 
 	    else if (objs.length === 0) {
 		var incident = {
-		    location: object.location,
+		    region: object.region,
+		    lat: object.lat,
+		    lon: object.lon,
 		    radius: DEFAULT_RADIUS,
 		    report_count: 1,
 		    status: "active",
 		    level: "warning",
-		    message: "An incident may have occurred in " + object.location.region
+		    message: "An incident may have occurred in " + object.region
 		};
 		dbDriver.create("incidents", incident, function(err,docs) {
 		    object.incident_id = docs._id;
