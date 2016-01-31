@@ -30,7 +30,7 @@ MongoClient.connect(url, function(err, db) {
 
 app.use(express.bodyParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'css')));
 
 app.get('/', function (req, res) {
     res.send('<html><body><h1>Welcome to Safety Circle!</h1></body></html>');
@@ -157,7 +157,7 @@ app.post('/:collection', function(req, res) {
 	    } else {
 		var incident = objs[0];
 		object.incident_id = incident._id;
-		incident.report_count += 1;
+		incident.report_count++;
 		dbDriver.update("incidents", incident,
 				incident._id, function(err, docs) {
 		    callback(object);

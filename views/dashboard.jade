@@ -7,7 +7,9 @@ html(lang='en')
     title Dashboard | Safe Spot
     // Bootstrap
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
+    //link(rel='stylesheet', href='../css/hacker.css')
     style
+      include ../css/hacker.css
       include ../css/dashboard.css
   body(style='padding-top: 65px')
     nav.navbar.navbar-inverse.navbar-fixed-top
@@ -16,31 +18,32 @@ html(lang='en')
           span.navbar-brand Safe Spot Dashboard
     .container
       .row
-        .col-md-6
-          .panel.panel-default
-            .panel-heading
-              | Incidents
-            .panel-body
-              .table-responsive
-                table#incidents-table.table.table-striped.table-hover
-                  thead
-                    tr
-                      th Date
-                      th Region
-                      th Reports
-                      th Level
-                      th Type
-                      th Status
-                  tbody
-                    for incident in incidents
-                      tr.inc-row(id=incident._id)
-                        td= incident.time
-                        td= incident.region
-                        td= incident.report_count
-                        td= incident.level
-                        td= incident.type
-                        td= incident.status
-        #incident-container.col-md-6
+        .col-lg-6
+            //.row
+            .panel.panel-default
+              .panel-heading
+                | Incidents
+              .panel-body
+                .table-responsive
+                  table#incidents-table.table.table-striped.table-hover
+                    thead
+                      tr
+                        th Date
+                        th Region
+                        th Reports
+                        th Level
+                        th Type
+                        th Status
+                    tbody
+                      for incident in incidents
+                        tr.inc-row(id=incident._id)
+                          td= incident.time
+                          td= incident.region
+                          td= incident.report_count
+                          td= incident.level
+                          td= incident.type
+                          td= incident.status
+        #incident-container.col-lg-6
           .row
             | Select an incident.
       hr

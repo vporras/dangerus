@@ -44,6 +44,7 @@ dbDriver.prototype.create = function(collectionName, obj, callback) {
       if (error)
 	  callback(error)
       else {
+          obj.updated_at = new Date();
           the_collection.insert(obj, function() {
               callback(null, obj);
           });

@@ -1,3 +1,8 @@
 .selected {
-    background-color: #fe9 !important;
+    background-color: #601 !important;
+}
+
+.panel-default>.panel-heading {
+    color: #051;
+    font-weight: bold;
 }

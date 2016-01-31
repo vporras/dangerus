@@ -1,7 +1,7 @@
 .row
   .panel.panel-default
     #region-label.panel-heading
-      b= incident.region + '-' + incident.time
+      = incident.region + '  ' + incident.time
     .panel-body
       form(role='form')
         .row
@@ -28,7 +28,7 @@
               option(selected=(incident.level == "warning")) warning
               option(selected=(incident.level == "emergency")) emergency
           .form-group.col-md-3
-            label Radius (meters)
+            label Radius (m)
             input.form-control(value=incident.radius)#radius
           .form-group.col-md-2
             label Latitude
