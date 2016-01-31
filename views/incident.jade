@@ -1,0 +1,79 @@
+.row
+  .panel.panel-default
+    #region-label.panel-heading
+      b= incident.region + '-' + incident.time
+    .panel-body
+      form(role='form')
+        .row
+          .form-group.col-md-2
+            label Status
+            br
+            input#status-active(type='checkbox', name='status', value='active', checked=(incident.status === "active"))
+            |  Active
+          .form-group.col-md-4
+            label Type
+            select.form-control#type
+              option(selected=(incident.type == "mass_shooting")) mass_shooting
+              option(selected=(incident.type == "bombing")) bombing
+              option(selected=(incident.type == "natural_disaster")) natural_disaster
+              option(selected=(incident.type == "other_major")) other_major
+              option(selected=(incident.type == "minor")) minor
+          .form-group.col-md-4
+              label Subtype
+              input.form-control(value=incident.subtype)#subtype
+        .row
+          .form-group.col-md-4
+            label Level
+            select.form-control#level
+              option(selected=(incident.level == "warning")) warning
+              option(selected=(incident.level == "emergency")) emergency
+          .form-group.col-md-3
+            label Radius (meters)
+            input.form-control(value=incident.radius)#radius
+          .form-group.col-md-2
+            label Latitude
+            input.form-control(disabled="disabled", value=incident.lat)#lat
+          .form-group.col-md-2
+            label Longitude
+            input.form-control(disabled="disabled", value=incident.lon)#lon
+        .row
+          .form-group.col-md-12
+            label Message
+            input.form-control(value=incident.message)#message
+        .row
+          .form-group.col-md-12
+            label Notes
+            textarea.form-control(rows='3')#notes= incident.notes
+        .row
+          .form-group.col-md-12
+            button.btn.btn-default#submit-button
+              | Submit
+      input(type='hidden', value=incident.region)#region
+      input(type='hidden', value=incident.time)#time
+      input(type='hidden', value=incident.report_count)#report_count
+.row
+  .panel.panel-default
+    .panel-heading
+      | Reports
+    .panel-body
+      .table-responsive
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th Time
+              th Type
+              th Subtype
+              th Description
+          tbody
+            for report in reports
+              tr.rep-row(id=report._id)
+                td= report.time
+                td= report.type
+                td= report.subtype
+                td= report.description
+
+
+
+
+
+
