@@ -4,10 +4,9 @@ Fields are not guaranteed to be present.
 
 ##Report
 + POST http://188.166.154.26/reports
-+ `location : `
-  * `lat : float`
-  * `lon : float`
-  * `region : string`
++ `lat : float`
++ `lon : float`
++ `region : string`
 + `type : {"mass_shooting", "bombing", "natural_disaster", "other_major", "minor"}`
 + `subtype : {"flood", "fire", "earthquake", "robbery", "shooting"}`
 + `description : string`
@@ -15,13 +14,11 @@ Fields are not guaranteed to be present.
 
 ###Example
     {
-        "location" : {
-            "lat" : 47.453,
-            "lon" : -138.241,
-            "region" : "london"
-        },
-	    "type" : "natural_disaster",
-	    "subtype" : "flood",
+        "lat" : 47.453,
+        "lon" : -138.241,
+        "region" : "london",
+        "type" : "natural_disaster",
+        "subtype" : "flood",
         "description" : "the Thames is over the Eye!",
         "user_id" : "kjsfj234fh"
     }
@@ -34,10 +31,9 @@ Fields are not guaranteed to be present.
 
 ##Incidents
 + GET http://188.166.154.26/incidents?status=active&location.region=region_name_goes_here
-+ `location : `
-++ `lat : float`
-++ `lon : float`
-++ `region : string`
++ `lat : float`
++ `lon : float`
++ `region : string`
 + `radius : integer` (in meters)
 + `report_count : integer`
 + `level : {"warning", "emergency"}`
@@ -47,11 +43,9 @@ Fields are not guaranteed to be present.
 ###Example
     [
         {
-            "location" : {
-                "lat" : 47.0,
-                "lon" : -138.0,
-                "region" : "london"
-            },
+            "lat" : 47.0,
+            "lon" : -138.0,
+            "region" : "london",
             "radius" : 2000,
             "report_count" : 17,
             "level" : "warning",
@@ -59,11 +53,9 @@ Fields are not guaranteed to be present.
             "incident_id" : "56abcb32424bcff22342"
         },
         {
-            "location" : {
-                "lat" : 22.0,
-                "lon" : 110.0,
-                "region" : "jerusalem"
-            },
+            "lat" : 22.0,
+            "lon" : 110.0,
+            "region" : "jerusalem",
             "radius" : 100,
             "report_count" : 4,
             "level" : "warning",
