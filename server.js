@@ -1,5 +1,6 @@
 //Lets define a port we want to listen to
 const PORT = process.argv[2] || 80;
+const DEFAULT_RADIUS = 1000;
 
 var http = require('http'),
 express = require('express'),
@@ -43,7 +44,6 @@ app.get('/:collection', function(req, res) {
     for (key in req.query)
 	if (key.match(/\w+/))
 	    query[key] = req.query[key];
-    console.log(query);
 
     dbDriver.findAll(collection, query, function(error, objs) { 
     	if (error) { res.send(400, error); } 
@@ -52,7 +52,6 @@ app.get('/:collection', function(req, res) {
 		objs[i][collection.slice(0, -1) + '_id'] = objs[i]._id;
 		delete objs[i]._id;
 	    }
-		console.log(objs);
 	    if (req.accepts('html')) { 
     	        res.render('data',{objects: objs, collection: collection}); 
             } else {
@@ -80,14 +79,55 @@ app.get('/:collection/:entity', function(req, res) {
 app.post('/:collection', function(req, res) { 
     var object = req.body;
     var collection = req.params.collection;
-    dbDriver.create(collection, object, function(err,docs) {
-        if (err) { res.send(400, err); } 
-        else {
-	    var wrapped_id = {};
-	    wrapped_id[collection.slice(0, -1) + '_id'] = docs._id;
-	    res.send(201, wrapped_id);
-	} 
-    });
+
+    var callback = function(object) {	
+	console.log(object);
+	dbDriver.create(collection, object, function(err,docs) {
+            if (err) { res.send(400, err); } 
+            else {
+		var wrapped_id = {};
+		wrapped_id[collection.slice(0, -1) + '_id'] = docs._id;
+		res.send(201, wrapped_id);
+	    }
+	});
+    };
+
+
+    // search for related incidents
+    if (collection === "reports") {
+	var query = {
+	    status: "active",
+	    "location.region": object.location.region
+	};
+	console.log(query);
+	dbDriver.findAll("incidents", query,  function(error, objs) { 
+    	    if (error) { console.log(error); } 
+	    else if (objs.length === 0) {
+		var incident = {
+		    location: object.location,
+		    radius: DEFAULT_RADIUS,
+		    report_count: 1,
+		    status: "active",
+		    level: "warning",
+		    message: "An incident may have occurred in " + object.location.region
+		};
+		dbDriver.create("incidents", incident, function(err,docs) {
+		    object.incident_id = docs._id;
+		    callback(object);
+		});
+	    } else {
+		var incident = objs[0];
+		object.incident_id = incident._id;
+		incident.report_count += 1;
+		dbDriver.update("incidents", incident,
+				incident._id, function(err, docs) {
+		    callback(object);
+		});
+	    }
+	});
+    } else {
+	callback(object);
+    }
 });
 
 app.put('/:collection/:entity', function(req, res) { 
